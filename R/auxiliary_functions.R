@@ -25,12 +25,20 @@ prepare.indel.df_tabversion <- function (indel.data, genomeSeq, genome.v)
     extend5 = min.position - 2 * indel.length - 60
     extend3 = max.position + 2 * indel.length + 60
 
-    sl5 <- GenomicRanges::GRanges(seqnames = indel.chr, IRanges::IRanges(extend5, min.position) )
-    sl3 <- GenomicRanges::GRanges(seqnames = indel.chr, IRanges::IRanges(ifelse(indel.type == "I", min.position, max.position) +
-                                                                           1, extend3) )
+    if ("slice5" %in% colnames(indel.data)) {
+      slice5 <- as.character(indel.data$slice5)
+    } else {
+      sl5 <- GenomicRanges::GRanges(seqnames = indel.chr, IRanges::IRanges(extend5, min.position) )
+      slice5 <- as.character(BSgenome::getSeq(genomeSeq@single_sequences@twobitfile, sl5 ))
+    }
 
-    slice5 <- as.character(BSgenome::getSeq(genomeSeq@single_sequences@twobitfile, sl5 ))
-    slice3 <- as.character(BSgenome::getSeq(genomeSeq@single_sequences@twobitfile, sl3 ))
+    if ("slice3" %in% colnames(indel.data)) {
+      slice3 <- as.character(indel.data$slice3)
+    } else {
+      sl3 <- GenomicRanges::GRanges(seqnames = indel.chr, IRanges::IRanges(ifelse(indel.type == "I", min.position, max.position) +
+                                                                             1, extend3) )
+      slice3 <- as.character(BSgenome::getSeq(genomeSeq@single_sequences@twobitfile, sl3 ))
+    }
     indel.df <- data.frame(chr = as.character(indel.data$chr),
                            pos = indel.data$position, ref = as.character(indel.data$REF),
                            alt = as.character(indel.data$ALT), indel.type = indel.type,
