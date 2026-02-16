@@ -22,15 +22,15 @@ prepare.indel.df_tabversion <- function (indel.data, genomeSeq, genome.v)
     min.position <- indel.data$position
     max.position <- indel.data$position + indel.length
     indel.chr <- as.character(indel.data$chr)
-    extend5 = min.position - 2 * indel.length - 60
-    extend3 = max.position + 2 * indel.length + 60
+    # extend5 = min.position - 2 * indel.length - 60
+    # extend3 = max.position + 2 * indel.length + 60
 
-    sl5 <- GenomicRanges::GRanges(seqnames = indel.chr, IRanges::IRanges(extend5, min.position) )
-    sl3 <- GenomicRanges::GRanges(seqnames = indel.chr, IRanges::IRanges(ifelse(indel.type == "I", min.position, max.position) +
-                                                                           1, extend3) )
+    # sl5 <- GenomicRanges::GRanges(seqnames = indel.chr, IRanges::IRanges(extend5, min.position) )
+    # sl3 <- GenomicRanges::GRanges(seqnames = indel.chr, IRanges::IRanges(ifelse(indel.type == "I", min.position, max.position) +
+    #                                                                        1, extend3) )
 
-    slice5 <- as.character(BSgenome::getSeq(genomeSeq@single_sequences@twobitfile, sl5 ))
-    slice3 <- as.character(BSgenome::getSeq(genomeSeq@single_sequences@twobitfile, sl3 ))
+    # slice5 <- as.character(BSgenome::getSeq(genomeSeq@single_sequences@twobitfile, sl5 ))
+    # slice3 <- as.character(BSgenome::getSeq(genomeSeq@single_sequences@twobitfile, sl3 ))
     indel.df <- data.frame(chr = as.character(indel.data$chr),
                            pos = indel.data$position, ref = as.character(indel.data$REF),
                            alt = as.character(indel.data$ALT), indel.type = indel.type,
@@ -46,25 +46,25 @@ prepare.indel.df_tabversion <- function (indel.data, genomeSeq, genome.v)
 
 prepfunc <- function (indel.data, sampleID, genome.v)
 {
-  if (genome.v == "hg19") {
-    expected_chroms <- paste0("chr", c(seq(1:22), "X", "Y"))
-    genomeSeq <- BSgenome.Hsapiens.UCSC.hg19::BSgenome.Hsapiens.UCSC.hg19
-  }
-  else if (genome.v == "hg38") {
-    expected_chroms <- paste0("chr", c(seq(1:22), "X", "Y"))
-    genomeSeq <- BSgenome.Hsapiens.UCSC.hg38::BSgenome.Hsapiens.UCSC.hg38
-  }
-  else if (genome.v == "mm10") {
-    expected_chroms <- paste0("chr", c(seq(1:19), "X", "Y"))
-    genomeSeq <- BSgenome.Mmusculus.UCSC.mm10::BSgenome.Mmusculus.UCSC.mm10
-  }
-  else if (genome.v == "canFam3") {
-    expected_chroms <- paste0("chr", c(seq(1:38), "X"))
-    genomeSeq <- BSgenome.Cfamiliaris.UCSC.canFam3::BSgenome.Cfamiliaris.UCSC.canFam3
-  }
+  # if (genome.v == "hg19") {
+  #   expected_chroms <- paste0("chr", c(seq(1:22), "X", "Y"))
+  #   genomeSeq <- BSgenome.Hsapiens.UCSC.hg19::BSgenome.Hsapiens.UCSC.hg19
+  # }
+  # else if (genome.v == "hg38") {
+  #   expected_chroms <- paste0("chr", c(seq(1:22), "X", "Y"))
+  #   genomeSeq <- BSgenome.Hsapiens.UCSC.hg38::BSgenome.Hsapiens.UCSC.hg38
+  # }
+  # else if (genome.v == "mm10") {
+  #   expected_chroms <- paste0("chr", c(seq(1:19), "X", "Y"))
+  #   genomeSeq <- BSgenome.Mmusculus.UCSC.mm10::BSgenome.Mmusculus.UCSC.mm10
+  # }
+  # else if (genome.v == "canFam3") {
+  #   expected_chroms <- paste0("chr", c(seq(1:38), "X"))
+  #   genomeSeq <- BSgenome.Cfamiliaris.UCSC.canFam3::BSgenome.Cfamiliaris.UCSC.canFam3
+  # }
   vcf_seqnames <- unique(indel.data$chr)
   # message("")
-  indel.data <- indel.data[indel.data$chr %in% expected_chroms,,drop=F]
+  # indel.data <- indel.data[indel.data$chr %in% expected_chroms,,drop=F]
   if (nrow(indel.data) == 0) {
     message("[warning tabToIndelsClassification] no indels founds, nothing to process.")
     return(NULL)
