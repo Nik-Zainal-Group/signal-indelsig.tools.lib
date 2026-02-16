@@ -52,7 +52,7 @@ prepare.indel.df_tabversion <- function (indel.data, genomeSeq, genome.v)
 }
 
 
-prepfunc <- function (indel.data, sampleID, genome.v = "hg19")
+prepfunc <- function (indel.data, sampleID, genome.v)
 {
   if (genome.v == "hg19") {
     expected_chroms <- paste0("chr", c(seq(1:22), "X", "Y"))
