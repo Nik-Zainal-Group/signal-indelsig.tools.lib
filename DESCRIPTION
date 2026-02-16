@@ -29,11 +29,8 @@ Imports:
     utils,
     Rcpp,
     Biostrings,
-    BSgenome.Hsapiens.UCSC.hg38,
-    BSgenome.Hsapiens.UCSC.hg19,
     gmp
 Suggests: 
-    BSgenome.Mmusculus.UCSC.mm10,
     knitr,
     rmarkdown,
     testthat
