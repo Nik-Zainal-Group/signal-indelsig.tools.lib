@@ -34,7 +34,7 @@ prepare.indel.df_tabversion <- function (indel.data, genomeSeq, genome.v)
     indel.df <- data.frame(chr = as.character(indel.data$chr),
                            pos = indel.data$position, ref = as.character(indel.data$REF),
                            alt = as.character(indel.data$ALT), indel.type = indel.type,
-                           change = change, slice3 = slice3, slice5 = slice5,
+                           change = change, slice3 = indel.data$slice3, slice5 = indel.data$slice5,
                            indel.length = indel.length)
   }
   else {
